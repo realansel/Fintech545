@@ -54,28 +54,27 @@ print(beta_hat)
 print("AIC: ", 6 + like * 2)
 
 
-def __T_loglikelihood(params, x, y):
-    mu, s, nu = params
-    n = x.shape[0]
-    np12 = (nu + 1.0)/2.0
-
-    mess = gammaln(np12) - gammaln(nu/2.0) - math.log(math.sqrt(math.pi*nu)*s)
-    xm = ((x - mu)/s)**2 * (1/nu) + 1
-    innerSum = np.log(xm).sum()
-    ll = n*mess - np12*innerSum
-    return -ll  # Return negative log-likelihood for optimization
-
+def __T_loglikelihood(params):
+  # extract parameters
+  beta, std_dev = params
+  # predict the output
+  err = Y - beta*X
+  # Calculate the log-likelihood for normal distribution
+  LL = np.sum(scipy.stats.t.logpdf(err, 6.2, 0, std_dev))
+  # Calculate the negative log-likelihood
+  neg_LL = -1*LL# Return negative log-likelihood for optimization
+  return neg_LL
 # Initialize starting parameters
-params_init = [0, 1, 1]
+params_init = [1, 1]
 
 # Perform MLE optimization
-res = minimize(__T_loglikelihood, params_init, args=(X, Y))
+res = minimize(__T_loglikelihood, params_init)
 
 # Extract fitted parameters
-mu_hat, s_hat, nu_hat = res.x
+mu_hat, s_hat = res.x
 AICp = 6 + res.fun * 2
 # Print results
-print(f'Fitted parameters: mu = {mu_hat}, s = {s_hat}, nu = {nu_hat:.2f}')
+print(f'Fitted parameters: mu = {mu_hat}, s = {s_hat}')
 print("AIC: ", AICp)
 error2 = Y - X * s_hat
 plt.plot(error2)
