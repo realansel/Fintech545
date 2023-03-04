@@ -1,0 +1,7 @@
+The code requires the following Python packages to be installed:
+This code use jupyter notebook
+
+pandas
+numpy
+scipy
+mathplotlib
