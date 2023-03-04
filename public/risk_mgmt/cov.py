@@ -2,15 +2,25 @@ import numpy as np
 
 
 
-def exp_covmatrix(matrix,lamb):
-  # initialize cov matrix.
-  n = matrix.shape[1]
-  print(n)
-  covMatrix = np.zeros((n,n))
-  for i in range(len(matrix.columns)):
-    for j in range(len(matrix.columns)):
-      covMatrix[i][j] = exp_cov(matrix.iloc[:, i], matrix.iloc[:,j], n, lambda_value=lamb)
-  return covMatrix
+def ew_covar(x, lam):
+    m, n = x.shape
+    w = np.empty(m)
+
+    # Remove the mean from the series
+    xm = np.mean(x, axis=0)
+ 
+    for j in range(n):
+        x.iloc[:, j] -= xm[j]
+
+    # Calculate weights. Realize we are going from oldest to newest
+    for i in range(m):
+        w[i] = (1 - lam) * lam ** (m - i)
+
+    # Normalize weights to 1
+    w /= np.sum(w)
+
+    # Covariance[i, j] = (w * x).T @ x  where @ is matrix multiplication.
+    return np.dot(w * x.T, x)
 
 
 # Get covariance from correlation and variance

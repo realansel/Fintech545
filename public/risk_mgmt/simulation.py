@@ -1,5 +1,5 @@
 import numpy as np
-from Risk_Management.PSD_fix import chol_psd
+from risk_mgmt.PSD_fix import chol_psd
 
 
 def direct_simulation(cov,nsim):
@@ -7,7 +7,7 @@ def direct_simulation(cov,nsim):
   return result
 
 
-def simulate_pca(a, nsim, perc):
+def simulate_pca(a, nsim, perc=0.95):
     # a - matrix input
     # nsim - # of simulation
     # perc - percentage of explaination you want

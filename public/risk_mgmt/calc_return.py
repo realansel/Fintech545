@@ -25,3 +25,28 @@ def return_calculate(prices, method='DISCRETE', date_column='Date'):
     for i in range(n_vars):
         out[vars[i]] = p2[:, i]
     return out
+
+
+def get_portfolio_price(portfolio,prices,symbol):
+    if symbol != "ALL":
+        returns = prices.pct_change().dropna(how='all')
+        pv = []
+        for stock in portfolio[portfolio['Portfolio']==symbol]['Stock']:
+            pv.append(prices.iloc[-1][stock])
+        returns_p=[]
+        for stock in portfolio[portfolio['Portfolio']==symbol].loc[:, 'Stock'].tolist():
+            returns_p.append((returns.loc[:, stock]).tolist())
+        returns_p=pd.DataFrame(returns_p).T
+        holdings = portfolio[portfolio['Portfolio']==symbol]
+        return pv, returns_p, holdings
+    else:
+        returns = prices.pct_change().dropna(how='all')
+        pv = []
+        for stock in portfolio['Stock']:
+            pv.append(prices.iloc[-1][stock])
+        returns_p=[]
+        for stock in portfolio.loc[:, 'Stock'].tolist():
+            returns_p.append((returns.loc[:, stock]).tolist())
+        returns_p=pd.DataFrame(returns_p).T
+        holdings = portfolio
+        return pv, returns_p, holdings

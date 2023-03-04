@@ -1,6 +1,0 @@
-setup.py
-risk_mgmt.egg-info/PKG-INFO
-risk_mgmt.egg-info/SOURCES.txt
-risk_mgmt.egg-info/dependency_links.txt
-risk_mgmt.egg-info/requires.txt
-risk_mgmt.egg-info/top_level.txt

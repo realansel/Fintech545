@@ -1,6 +1,6 @@
 import numpy as np
 import scipy.stats as stats
-from cov import weight_f, exp_covmatrix
+from risk_mgmt.cov import ew_covar
 
 # Calculate Var
 def calculate_var(data, mean=0, alpha=0.05):
@@ -8,7 +8,7 @@ def calculate_var(data, mean=0, alpha=0.05):
 
 
 # Calculate ES
-def calculate_es(data, mean, alpha):
+def calculate_es(data, mean=0, alpha=0.05):
   return -np.mean(data[data <= -calculate_var(data, mean, alpha)])
 
 
@@ -48,8 +48,7 @@ def ewcov_normal_var(data, mean=0, alpha=0.05, nsamples=10000, lambd = 0.94):
     """
     
     # Calculate the exponentially weighted covariance matrix
-    weights = weight_f(len(data), lambda_value=lambd)
-    ew_cov = exp_covmatrix(data, weights)
+    ew_cov = ew_covar(data, lambd)
     
     # Calculate the exponentially weighted variance and standard deviation
     ew_variance = ew_cov
