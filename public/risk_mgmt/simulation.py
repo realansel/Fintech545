@@ -31,3 +31,13 @@ def simulate_pca(a, nsim, perc=0.95):
     m = B.shape[1]
     r = np.random.randn(m,nsim)
     return np.matmul(B, r)
+
+
+def log_returns(data):
+    # Calculate the natural logarithm of the data
+    log_data = np.log(data)
+
+    # Calculate the log returns by taking the difference between consecutive log values
+    log_returns = np.diff(log_data)
+
+    return log_returns
