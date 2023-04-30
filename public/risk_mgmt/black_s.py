@@ -25,7 +25,7 @@ def black_scholes(S, X, r, q, t, sigma, option):
 
 
 
-def implied_volatility(S, X, r, q, t, market_price, option_type='call', initial_guess=0.5, max_iter=300, tol=1e-8):
+def implied_volatility(S, X, r, q, t, market_option_price, option_type='call', initial_guess=0.5, max_iter=300, tol=1e-8):
     sigma = initial_guess
 
     for _ in range(max_iter):
@@ -39,7 +39,7 @@ def implied_volatility(S, X, r, q, t, market_price, option_type='call', initial_
         d1 = (np.log(S / X) + (r - q + (sigma ** 2) / 2) * t) / (sigma * np.sqrt(t))
         vega = S * np.exp(-q * t) * stats.norm.pdf(d1) * np.sqrt(t)
 
-        diff = option_price - market_price
+        diff = option_price - market_option_price
 
         if abs(diff) < tol:
             return sigma

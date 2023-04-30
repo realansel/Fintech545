@@ -11,6 +11,22 @@ def calculate_var(data, mean=0, alpha=0.05):
 def calculate_es(data, mean=0, alpha=0.05):
   return -np.mean(data[data <= -calculate_var(data, mean, alpha)])
 
+def VAR(a, alpha=0.05):
+    x = np.sort(a)
+    n = len(a)
+    nup = int(np.ceil(n * alpha))
+    ndn = int(np.floor(n * alpha))
+    v = 0.5 * (x[nup] + x[ndn])
+    return -v
+
+def ES(a, alpha=0.05):
+    x = np.sort(a)
+    n = len(a)
+    nup = int(np.ceil(n * alpha))
+    ndn = int(np.floor(n * alpha))
+    v = 0.5 * (x[nup] + x[ndn])
+    es = np.mean(x[x <= v])
+    return -es
 
 # Calculate Normal distribution VaR
 def normal_var(data, mean=0, alpha=0.05, nsamples=10000):

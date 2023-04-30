@@ -83,7 +83,7 @@ def higham(R, tol=100):
     λ, V = scipy.linalg.eigh(R)
     check = 0
     for i in λ:
-      if i < -1e-8:
+      if i < -1e-9:
         check +=1
     if check == 0 or tol <0:
       state = False
