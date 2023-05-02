@@ -45,7 +45,8 @@ def normal_var(data, mean=0, alpha=0.05, nsamples=10000):
     sigma = np.std(data)
     simulation_norm = np.random.normal(mean, sigma, nsamples)
     var_norm = calculate_var(simulation_norm, mean, alpha)
-    return var_norm
+    es_norm = calculate_es(simulation_norm, mean, alpha)
+    return var_norm, es_norm
 
 
 def ewcov_normal_var(data, mean=0, alpha=0.05, nsamples=10000, lambd = 0.94):

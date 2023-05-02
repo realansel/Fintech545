@@ -7,7 +7,7 @@ from scipy.optimize import minimize
 from scipy.special import gammaln
 import math
 
-file = pd.read_csv("./problem2.csv")
+file = pd.read_csv("/Users/ansel_li/Fintech545/public/Week02/problem2.csv")
 X=file.x
 Y=file.y
 model = sm.OLS(Y,X)
